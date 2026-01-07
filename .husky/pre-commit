@@ -1,5 +1,7 @@
 echo "🔍 Running pre-commit checks..."
 
+pnpm run format
+
 echo "📦 Building project..."
 npm run build
 if [ $? -ne 0 ]; then

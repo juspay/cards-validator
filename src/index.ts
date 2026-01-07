@@ -5,7 +5,7 @@
  */
 
 // Export the CardValidator class
-export { default } from './validators';
+export { default } from "./validators";
 
 // Export types for TypeScript consumers
-export type { CardDetails, CardType } from './types';
+export type { CardDetails, CardType } from "./types";

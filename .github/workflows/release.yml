@@ -1,0 +1,177 @@
+name: Release and Publish
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+    environment: npm
+
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Build package
+        run: |
+          pnpm build
+
+      - name: Verify build artifacts
+        run: |
+          echo "Checking if dist directory exists..."
+          if [ -d "dist" ]; then
+            echo "✅ dist directory exists"
+            echo "Contents of dist directory:"
+            find dist -type f | head -20
+            echo "Total files in dist: $(find dist -type f | wc -l)"
+          else
+            echo "❌ dist directory does not exist"
+            echo "Current directory contents:"
+            ls -la
+            exit 1
+          fi
+
+      - name: Bump version and generate changelog
+        id: version-bump
+        run: |
+          # Get current version
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+
+          # Bump version based on type
+          if [ "${{ steps.version-type.outputs.version_type }}" = "major" ]; then
+            NEW_VERSION=$(pnpm version major --no-git-tag-version)
+          elif [ "${{ steps.version-type.outputs.version_type }}" = "minor" ]; then
+            NEW_VERSION=$(pnpm version minor --no-git-tag-version)
+          else
+            NEW_VERSION=$(pnpm version patch --no-git-tag-version)
+          fi
+
+          # Clean up version string (remove 'v' prefix if present)
+          NEW_VERSION=$(echo $NEW_VERSION | sed 's/^v//')
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Stage and commit changes
+        run: |
+          # Check if there are any changes to commit
+          if [ -n "$(git status --porcelain)" ]; then
+            git add package.json
+            if [ -f "docs/CHANGELOG.md" ]; then
+              git add docs/CHANGELOG.md
+            fi
+            git commit -m "chore(release): ${{ steps.version-bump.outputs.new_version }}"
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Push changes (without tags)
+        run: |
+          # Pull latest changes to avoid conflicts
+          git fetch origin release
+
+          # Check if we're behind
+          if [ $(git rev-list --count HEAD..origin/release) -gt 0 ]; then
+            echo "Local branch is behind remote. Attempting to rebase..."
+            git rebase origin/release
+          fi
+
+          # Push changes first (without tags)
+          git push origin release
+
+          echo "Successfully pushed changes for version ${{ steps.version-bump.outputs.new_version }}"
+
+      - name: Generate changelog
+        run: |
+          # Install auto-changelog if not already installed
+          if ! command -v auto-changelog &> /dev/null; then
+            npm install -g auto-changelog
+          fi
+
+          # Ensure docs directory exists
+          mkdir -p docs
+
+          # Generate changelog
+          auto-changelog --config .auto-changelog
+
+          # If changelog generation failed, create a basic one
+          if [ ! -f "docs/CHANGELOG.md" ]; then
+            echo "# Changelog" > docs/CHANGELOG.md
+            echo "" >> docs/CHANGELOG.md
+            echo "## [${{ steps.version-bump.outputs.new_version }}] - $(date +%Y-%m-%d)" >> docs/CHANGELOG.md
+            echo "" >> docs/CHANGELOG.md
+            echo "### Changes" >> docs/CHANGELOG.md
+            echo "- $(git log -1 --pretty=format:"%s")" >> docs/CHANGELOG.md
+          fi
+      
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # Create .npmrc file for authentication
+          cat > ~/.npmrc << EOF
+          //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+          registry=https://registry.npmjs.org/
+          always-auth=true
+          EOF
+
+          # Check if this version already exists on NPM
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          NEW_VERSION="${{ steps.version-bump.outputs.new_version }}"
+
+          echo "Checking if $PACKAGE_NAME@$NEW_VERSION already exists..."
+          if npm view "$PACKAGE_NAME@$NEW_VERSION" version 2>/dev/null; then
+            echo "Version $NEW_VERSION already exists on NPM, skipping publish"
+            exit 0
+          fi
+
+          # Publish to NPM (with organization scope support)
+          echo "Publishing $PACKAGE_NAME@$NEW_VERSION to NPM..."
+          npm publish --access public
+          echo "Successfully published $PACKAGE_NAME@$NEW_VERSION to NPM"
+
+
+
+      # Commit version changes and create tags
+      - name: Commit changes and create tags
+        run: |
+          # Add version changes to git only for successfully published packages
+          # Create single commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No version changes to commit"
+          else
+            git commit -m "chore: bump package versions
+
+            ${{ steps.commit-info.outputs.message }}"
+            git push origin release
+          fi

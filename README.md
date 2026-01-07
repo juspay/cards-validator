@@ -1,46 +1,121 @@
-# Simple Card Validator TypeScript
+<div align="center">
 
-A comprehensive TypeScript library for validating credit card numbers, determining card types, and providing card-specific information like CVV length and supported card number lengths.
+# 💳 Cards Validator
 
-## Features
+### A comprehensive JS/TS library for validating credit and debit card numbers
 
--  **Card Type Detection**: Automatically detects 12+ major card types including Visa, MasterCard, American Express, Discover, JCB, Maestro, RuPay, UnionPay, and more
--  **Luhn Algorithm Validation**: Implements the industry-standard Luhn algorithm for card number validation
--  **Length Validation**: Validates card number length based on card type specifications
--  **CVV Length Information**: Provides valid CVV lengths for each detected card type
--  **Range-based Detection**: Uses both regex patterns and BIN ranges for accurate card type identification
--  **TypeScript Support**: Fully typed with comprehensive type definitions
--  **Zero Dependencies**: Lightweight library with no external dependencies
+[![npm version](https://img.shields.io/npm/v/@juspay/cards-validator.svg)](https://www.npmjs.com/package/@juspay/cards-validator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@juspay/cards-validator)](https://bundlephobia.com/package/@juspay/cards-validator)
 
-## Supported Card Types
+</div>
 
-| Card Type | Pattern/Range | Valid Lengths | CVV Length |
-|-----------|---------------|---------------|------------|
-| Visa | `^4` | 16 | 3 |
-| MasterCard | BIN ranges 222100-272099, 510000-559999 | 16 | 3 |
-| American Express | `^3[47]` | 15 | 4 |
-| Discover | `^(6011\|622...)` | 16 | 3 |
-| JCB | `^35(2[89]\|[3-8][0-9])` | 16 | 3 |
-| Maestro | `^(5018\|5081\|...)` | 12-19 | 0, 3 |
-| RuPay | BIN ranges | 16 | 3 |
-| UnionPay | `^6[0289]\|9[0245689]...` | 16-19 | 3 |
-| Diners Club | `^30[0-5]`, `^3([689]\|09)` | 14 | 3 |
-| Laser | `^(6304\|670[69]\|6771)` | 16-19 | 3, 4 |
-| Visa Electron | `^(4026\|417500\|...)` | 16 | 3 |
-| Sodexo | `^(637513)` | 16 | 3 |
+---
 
-## Installation
+## ✨ Features
+
+<table>
+<tr>
+<td>
+
+🎯 **Card Type Detection**  
+Automatically detects 12+ major card types including Visa, MasterCard, American Express, Discover, JCB, Maestro, RuPay, UnionPay, and more
+
+</td>
+<td>
+
+✅ **Luhn Algorithm Validation**  
+Implements the industry-standard Luhn algorithm for card number validation
+
+</td>
+</tr>
+<tr>
+<td>
+
+📏 **Length Validation**  
+Validates card number length based on card type specifications
+
+</td>
+<td>
+
+🔢 **CVV Length Information**  
+Provides valid CVV lengths for each detected card type
+
+</td>
+</tr>
+<tr>
+<td>
+
+🎨 **Range-based Detection**  
+Uses both regex patterns and BIN ranges for accurate card type identification
+
+</td>
+<td>
+
+📘 **TypeScript Support**  
+Fully typed with comprehensive type definitions
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+
+⚡ **Zero Dependencies**  
+Lightweight library with no external dependencies
+
+</td>
+</tr>
+</table>
+
+## 💳 Supported Card Types
+
+<details open>
+<summary><b>Click to view all supported card types</b></summary>
+
+| 🏦 Card Type | 🔍 Pattern/Range | 📏 Valid Lengths | 🔢 CVV Length |
+|--------------|------------------|------------------|---------------|
+| 🔵 Visa | `^4` | 16 | 3 |
+| 🔴 MasterCard | BIN ranges 222100-272099, 510000-559999 | 16 | 3 |
+| 🔵 American Express | `^3[47]` | 15 | 4 |
+| 🟠 Discover | `^(6011\|622...)` | 16 | 3 |
+| 🟢 JCB | `^35(2[89]\|[3-8][0-9])` | 16 | 3 |
+| 🔴 Maestro | `^(5018\|5081\|...)` | 12-19 | 0, 3 |
+| 🟣 RuPay | BIN ranges | 16 | 3 |
+| 🔵 UnionPay | `^6[0289]\|9[0245689]...` | 16-19 | 3 |
+| ⚪ Diners Club | `^30[0-5]`, `^3([689]\|09)` | 14 | 3 |
+| 🟢 Laser | `^(6304\|670[69]\|6771)` | 16-19 | 3, 4 |
+| 🔵 Visa Electron | `^(4026\|417500\|...)` | 16 | 3 |
+| 🟠 Sodexo | `^(637513)` | 16 | 3 |
+
+</details>
+
+---
+
+## 📦 Installation
 
 ```bash
-npm install simple-card-validator-ts
+npm install @juspay/cards-validator
 ```
 
-## Usage
+**Alternative package managers:**
 
-### Basic Usage
+```bash
+# Using Yarn
+yarn add @juspay/cards-validator
+
+# Using pnpm
+pnpm add @juspay/cards-validator
+```
+
+---
+
+## 🚀 Usage
+
+### 🎯 Basic Usage
 
 ```typescript
-import CardValidator from 'simple-card-validator-ts';
+import CardValidator from '@juspay/cards-validator';
 
 // Create a new validator instance
 const validator = new CardValidator('4111111111111111');
@@ -60,10 +135,10 @@ console.log(result);
 // }
 ```
 
-### Advanced Usage
+### 🔧 Advanced Usage
 
 ```typescript
-import CardValidator, { CardDetails } from 'simple-card-validator-ts';
+import CardValidator, { CardDetails } from '@juspay/cards-validator';
 
 // Validate different card types
 const cards = [
@@ -85,7 +160,7 @@ cards.forEach(cardNumber => {
 });
 ```
 
-### Handling Spaces and Dashes
+### 🔄 Handling Spaces and Dashes
 
 The library automatically normalizes card numbers by removing spaces and dashes:
 
@@ -100,9 +175,11 @@ console.log(validator2.getCardDetails().valid); // true
 console.log(validator3.getCardDetails().valid); // true
 ```
 
-## API Reference
+---
 
-### CardValidator Class
+## 📚 API Reference
+
+### 🏗️ CardValidator Class
 
 #### Constructor
 
@@ -114,13 +191,15 @@ new CardValidator(cardNumber: string)
 
 #### Methods
 
-##### `getCardDetails(): CardDetails`
+##### 📋 `getCardDetails(): CardDetails`
 
 Returns a comprehensive validation result object.
 
-### Types
+---
 
-#### `CardDetails`
+### 📝 Types
+
+#### 📊 `CardDetails`
 
 ```typescript
 interface CardDetails {
@@ -133,7 +212,7 @@ interface CardDetails {
 }
 ```
 
-#### `CardType`
+#### 💳 `CardType`
 
 ```typescript
 interface CardType {
@@ -146,12 +225,14 @@ interface CardType {
 }
 ```
 
-## Examples
+---
 
-### Validate and Format Card Information
+## 💡 Examples
+
+### 🎨 Validate and Format Card Information
 
 ```typescript
-import CardValidator from 'simple-card-validator-ts';
+import CardValidator from '@juspay/cards-validator';
 
 function formatCardInfo(cardNumber: string) {
   const validator = new CardValidator(cardNumber);
@@ -185,19 +266,21 @@ console.log(formatCardInfo('4111111111111112'));
 // { isValid: false, cardType: 'visa', issues: ['Invalid checksum'], message: 'Invalid card number' }
 ```
 
-## Development
+---
 
-### Prerequisites
+## 🛠️ Development
+
+### ⚙️ Prerequisites
 
 - Node.js (version 14 or higher)
-- npm or yarn
+- npm, yarn, or pnpm
 
-### Setup
+### 🔧 Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/simple-card-validator-ts.git
-cd simple-card-validator-ts
+git clone https://github.com/juspay/cards-validator.git
+cd cards-validator
 
 # Install dependencies
 npm install
@@ -212,24 +295,28 @@ npm test
 npm run dev
 ```
 
-### Scripts
+### 📜 Scripts
 
-- `npm run build` - Compile TypeScript to JavaScript
-- `npm run dev` - Watch mode for development
-- `npm test` - Run test suite
-- `npm run clean` - Remove build artifacts
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
+| Script | Description |
+|--------|-------------|
+| `npm run build` | 🔨 Compile TypeScript to JavaScript |
+| `npm run dev` | 👀 Watch mode for development |
+| `npm test` | 🧪 Run test suite |
+| `npm run clean` | 🧹 Remove build artifacts |
+| `npm run lint` | 🔍 Run ESLint |
+| `npm run format` | ✨ Format code with Prettier |
 
-## Testing
+---
+
+## 🧪 Testing
 
 The library includes comprehensive tests covering:
 
-- Card type detection for all supported card types
-- Luhn algorithm validation
-- Length validation
-- Edge cases and error handling
-- Input normalization (spaces, dashes)
+✅ Card type detection for all supported card types  
+✅ Luhn algorithm validation  
+✅ Length validation  
+✅ Edge cases and error handling  
+✅ Input normalization (spaces, dashes)
 
 Run tests with:
 
@@ -237,7 +324,9 @@ Run tests with:
 npm test
 ```
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -245,26 +334,44 @@ npm test
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📄 License
 
-## Changelog
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### v1.0.0
-- Initial release
-- Support for 12+ major card types
-- Luhn algorithm validation
-- Length validation
-- TypeScript support
-- Comprehensive test suite
+---
 
-## Acknowledgments
+## 📋 Changelog
 
-- [Luhn Algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) for card number validation
-- Card type patterns and ranges based on industry standards
-- Inspired by various open-source card validation libraries
+### v0.1.0
+- ✨ Initial release
+- 💳 Support for 12+ major card types
+- ✅ Luhn algorithm validation
+- 📏 Length validation
+- 📘 TypeScript support
+- 🧪 Comprehensive test suite
 
-## Support
+---
 
-If you encounter any issues or have questions, please file an issue on the [GitHub repository](https://github.com/yourusername/simple-card-validator-ts/issues).
+## 🙏 Acknowledgments
+
+- 🔐 [Luhn Algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) for card number validation
+- 💳 Card type patterns and ranges based on industry standards
+- 🌟 Inspired by various open-source card validation libraries
+
+---
+
+## 📞 Support
+
+If you encounter any issues or have questions, please file an issue on the [GitHub repository](https://github.com/juspay/cards-validator/issues).
+
+---
+
+<div align="center">
+
+Made with ❤️ by [Juspay Technologies](https://juspay.in)
+
+⭐ Star us on [GitHub](https://github.com/juspay/cards-validator) — it helps us grow!
+
+</div>

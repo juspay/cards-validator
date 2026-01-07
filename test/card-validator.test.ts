@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import CardValidator from '../src/validators';
+import fs from 'fs';
+import path from 'path';
+import { CardValidator } from '../src';
 
 // ================================
 // INTERFACES FOR DIFFERENT TEST TYPES
@@ -89,20 +89,26 @@ interface ExpiryTestSuite {
 // ================================
 
 function loadCardValidationTests(): CardTestSuite[] {
-  const testDataDir = path.join(__dirname, 'data/get-card-type-data');
-  if (!fs.existsSync(testDataDir)) return [];
+  const fixturesDir = path.join(__dirname, 'fixtures');
+  if (!fs.existsSync(fixturesDir)) return [];
 
-  const files = fs.readdirSync(testDataDir).filter(file => file.endsWith('.json'));
+  const testFiles = [
+    { file: 'incomplete-cards.json', suiteName: 'Incomplete Test Cards' },
+    { file: 'invalid-cards.json', suiteName: 'Invalid Test Cards' },
+    { file: 'valid-cards.json', suiteName: 'Valid Test Cards' },
+  ];
 
-  return files.map(file => {
-    const filePath = path.join(testDataDir, file);
-    const content = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(content) as CardTestSuite;
-  });
+  return testFiles
+    .filter(({ file }) => fs.existsSync(path.join(fixturesDir, file)))
+    .map(({ file }) => {
+      const filePath = path.join(fixturesDir, file);
+      const content = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(content) as CardTestSuite;
+    });
 }
 
 function loadSetBaseDateTests(): SetBaseDateTestSuite | null {
-  const filePath = path.join(__dirname, 'data/other/setbasedata-test-cases.json');
+  const filePath = path.join(__dirname, 'fixtures/setbasedata-test-cases.json');
   if (!fs.existsSync(filePath)) return null;
 
   const content = fs.readFileSync(filePath, 'utf8');
@@ -110,7 +116,7 @@ function loadSetBaseDateTests(): SetBaseDateTestSuite | null {
 }
 
 function loadCVVTests(): CVVTestSuite | null {
-  const filePath = path.join(__dirname, 'data/other/validatecvv-test-cases.json');
+  const filePath = path.join(__dirname, 'fixtures/cvv-test-cases.json');
   if (!fs.existsSync(filePath)) return null;
 
   const content = fs.readFileSync(filePath, 'utf8');
@@ -118,7 +124,7 @@ function loadCVVTests(): CVVTestSuite | null {
 }
 
 function loadExpiryTests(): ExpiryTestSuite | null {
-  const filePath = path.join(__dirname, 'data/other/validateexpiry-test-cases.json');
+  const filePath = path.join(__dirname, 'fixtures/expiry-test-cases.json');
   if (!fs.existsSync(filePath)) return null;
 
   const content = fs.readFileSync(filePath, 'utf8');
@@ -301,9 +307,9 @@ if (expiryTests) {
             const result = validator.validateExpiry(testCase.expiry!);
             // Current implementation returns undefined on success, not boolean
             expect(result).toBeUndefined();
-          } catch (error) {
+          } catch (_error) {
             // If it throws, the test data might not match current implementation
-            console.log(`Expiry test failed for ${testCase.expiry}: ${error}`);
+            console.log(`Expiry test failed for ${testCase.expiry}: ${_error}`);
             expect(true).toBe(true); // Pass for now - indicates implementation mismatch
           }
         });
@@ -323,7 +329,7 @@ if (expiryTests) {
             } else {
               expect(result).toBe(false);
             }
-          } catch (error) {
+          } catch {
             // Exception is also acceptable for invalid input
             expect(true).toBe(true);
           }
@@ -357,7 +363,7 @@ if (expiryTests) {
                   console.log(`Expected error for ${testCase.expiry} but none thrown`);
                 }
                 expect(true).toBe(true); // Pass for now
-              } catch (error) {
+              } catch {
                 // Error was thrown as expected
                 expect(true).toBe(true);
               }

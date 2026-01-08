@@ -11,7 +11,7 @@ interface CardTestCase {
   description: string;
   cardNumber: string;
   expected?: {
-    card_type: string;
+    card_brand: string;
     valid: boolean;
     luhn_valid: boolean;
     length_valid: boolean;
@@ -95,7 +95,7 @@ function loadCardValidationTests(): CardTestSuite[] {
   const testFiles = [
     { file: 'incomplete-cards.json', suiteName: 'Incomplete Test Cards' },
     { file: 'invalid-cards.json', suiteName: 'Invalid Test Cards' },
-    { file: 'valid-cards.json', suiteName: 'Valid Test Cards' },
+    { file: 'valid-cards.json', suiteName: 'Valid Test Cards' }
   ];
 
   return testFiles
@@ -144,9 +144,9 @@ const expiryTests = loadExpiryTests();
 // CARD VALIDATION TESTS (EXISTING)
 // ================================
 
-cardTestSuites.forEach(testSuite => {
+cardTestSuites.forEach((testSuite) => {
   describe(`Card Validation: ${testSuite.suiteName}`, () => {
-    testSuite.testCases.forEach(testCase => {
+    testSuite.testCases.forEach((testCase) => {
       if (testCase.expectedError) {
         test(`${testCase.description} [${testCase.cardNumber}]`, () => {
           expect(() => {
@@ -160,7 +160,7 @@ cardTestSuites.forEach(testSuite => {
           const result = validator.getCardDetails();
           const expected = testCase.expected!;
 
-          expect(result.card_type).toBe(expected.card_type);
+          expect(result.card_brand).toBe(expected.card_brand);
           expect(result.valid).toBe(expected.valid);
           expect(result.luhn_valid).toBe(expected.luhn_valid);
           expect(result.length_valid).toBe(expected.length_valid);
@@ -173,12 +173,14 @@ cardTestSuites.forEach(testSuite => {
           }
 
           const actualForComparison = {
-            card_type: result.card_type,
+            card_brand: result.card_brand,
             valid: result.valid,
             luhn_valid: result.luhn_valid,
             length_valid: result.length_valid,
             ...(expected.cvv_length !== undefined && { cvv_length: result.cvv_length }),
-            ...(expected.supported_lengths !== undefined && { supported_lengths: result.supported_lengths })
+            ...(expected.supported_lengths !== undefined && {
+              supported_lengths: result.supported_lengths
+            })
           };
 
           expect(actualForComparison).toEqual(expected);
@@ -195,7 +197,7 @@ cardTestSuites.forEach(testSuite => {
 if (setBaseDateTests) {
   describe(`setBaseData Function: ${setBaseDateTests.suite}`, () => {
     describe('Valid setBaseData Tests', () => {
-      setBaseDateTests.validTests.forEach(testCase => {
+      setBaseDateTests.validTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.month}/${testCase.year}] - SKIPPED: Method not implemented`, () => {
           // Note: setBaseData method is not implemented in the current validator
           // This test is skipped until the method is implemented
@@ -205,7 +207,7 @@ if (setBaseDateTests) {
     });
 
     describe('Invalid setBaseData Tests', () => {
-      setBaseDateTests.invalidTests.forEach(testCase => {
+      setBaseDateTests.invalidTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.month}/${testCase.year}] - SKIPPED: Method not implemented`, () => {
           // Note: setBaseData method is not implemented in the current validator
           // This test is skipped until the method is implemented
@@ -225,19 +227,19 @@ if (cvvTests) {
     // Test by card type
     Object.entries(cvvTests.testsByCardType).forEach(([cardType, cardTest]) => {
       describe(`${cardType.toUpperCase()} CVV Tests`, () => {
-
         // Valid CVVs
         describe('Valid CVVs', () => {
-          const validCvvs = Array.isArray(cardTest.validCvvs) &&
-            typeof cardTest.validCvvs[0] === 'string'
-            ? cardTest.validCvvs as string[]
-            : (cardTest.validCvvs as { cvv: string; description: string }[]).map(v => v.cvv);
+          const validCvvs =
+            Array.isArray(cardTest.validCvvs) && typeof cardTest.validCvvs[0] === 'string'
+              ? (cardTest.validCvvs as string[])
+              : (cardTest.validCvvs as { cvv: string; description: string }[]).map((v) => v.cvv);
 
           validCvvs.forEach((cvv, index) => {
-            const description = Array.isArray(cardTest.validCvvs) &&
-              typeof cardTest.validCvvs[0] === 'object'
-              ? (cardTest.validCvvs as { cvv: string; description: string }[])[index]?.description || `Valid CVV ${cvv}`
-              : `Valid CVV ${cvv}`;
+            const description =
+              Array.isArray(cardTest.validCvvs) && typeof cardTest.validCvvs[0] === 'object'
+                ? (cardTest.validCvvs as { cvv: string; description: string }[])[index]
+                    ?.description || `Valid CVV ${cvv}`
+                : `Valid CVV ${cvv}`;
 
             test(`${description} [${cardTest.cardNumber}] CVV: ${cvv}`, () => {
               const validator = new CardValidator(cardTest.cardNumber);
@@ -249,7 +251,7 @@ if (cvvTests) {
 
         // Invalid CVVs
         describe('Invalid CVVs', () => {
-          cardTest.invalidCvvs.forEach(testCase => {
+          cardTest.invalidCvvs.forEach((testCase) => {
             test(`${testCase.description} [${cardTest.cardNumber}] CVV: ${testCase.cvv}`, () => {
               const validator = new CardValidator(cardTest.cardNumber);
 
@@ -269,7 +271,7 @@ if (cvvTests) {
 
     // Error tests
     describe('CVV Error Tests', () => {
-      cvvTests.errorTests.forEach(testCase => {
+      cvvTests.errorTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.cardNumber}] CVV: ${testCase.cvv}`, () => {
           if (testCase.cardNumber === null || testCase.cardNumber === '') {
             expect(() => {
@@ -294,9 +296,8 @@ if (cvvTests) {
 
 if (expiryTests) {
   describe(`validateExpiry Function: ${expiryTests.suite}`, () => {
-
     describe('Valid Expiry Tests', () => {
-      expiryTests.validTests.forEach(testCase => {
+      expiryTests.validTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.cardNumber}] Expiry: ${testCase.expiry}`, () => {
           const validator = new CardValidator(testCase.cardNumber);
 
@@ -317,7 +318,7 @@ if (expiryTests) {
     });
 
     describe('Invalid Expiry Tests', () => {
-      expiryTests.invalidTests.forEach(testCase => {
+      expiryTests.invalidTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.cardNumber}] Expiry: ${testCase.expiry}`, () => {
           const validator = new CardValidator(testCase.cardNumber);
 
@@ -338,7 +339,7 @@ if (expiryTests) {
     });
 
     describe('Expiry Error Tests', () => {
-      expiryTests.errorTests.forEach(testCase => {
+      expiryTests.errorTests.forEach((testCase) => {
         test(`${testCase.description} [${testCase.cardNumber}] Expiry: ${testCase.expiry}`, () => {
           if (testCase.cardNumber === null || testCase.cardNumber === '') {
             expect(() => {
@@ -381,7 +382,8 @@ if (expiryTests) {
 
 describe('Enhanced Test Suite Coverage', () => {
   test('should load all test data files', () => {
-    const totalSuites = cardTestSuites.length +
+    const totalSuites =
+      cardTestSuites.length +
       (setBaseDateTests ? 1 : 0) +
       (cvvTests ? 1 : 0) +
       (expiryTests ? 1 : 0);
@@ -390,29 +392,34 @@ describe('Enhanced Test Suite Coverage', () => {
 
     console.log(`\n📊 Enhanced Test Suite Summary:`);
     console.log(`├── Card Validation Suites: ${cardTestSuites.length}`);
-    cardTestSuites.forEach(suite => {
+    cardTestSuites.forEach((suite) => {
       console.log(`│   ├── ${suite.suiteName}: ${suite.testCases.length} test cases`);
     });
 
     if (setBaseDateTests) {
-      const totalSetBaseDateTests = setBaseDateTests.validTests.length + setBaseDateTests.invalidTests.length;
+      const totalSetBaseDateTests =
+        setBaseDateTests.validTests.length + setBaseDateTests.invalidTests.length;
       console.log(`├── setBaseData Tests: ${totalSetBaseDateTests} test cases`);
       console.log(`│   ├── Valid: ${setBaseDateTests.validTests.length}`);
       console.log(`│   └── Invalid: ${setBaseDateTests.invalidTests.length}`);
     }
 
     if (cvvTests) {
-      const cvvTestCount = Object.values(cvvTests.testsByCardType).reduce((sum, cardTest) => {
-        const validCount = Array.isArray(cardTest.validCvvs) ? cardTest.validCvvs.length : 0;
-        return sum + validCount + cardTest.invalidCvvs.length;
-      }, 0) + cvvTests.errorTests.length;
+      const cvvTestCount =
+        Object.values(cvvTests.testsByCardType).reduce((sum, cardTest) => {
+          const validCount = Array.isArray(cardTest.validCvvs) ? cardTest.validCvvs.length : 0;
+          return sum + validCount + cardTest.invalidCvvs.length;
+        }, 0) + cvvTests.errorTests.length;
       console.log(`├── validateCvv Tests: ${cvvTestCount} test cases`);
       console.log(`│   ├── Card Types: ${Object.keys(cvvTests.testsByCardType).length}`);
       console.log(`│   └── Error Cases: ${cvvTests.errorTests.length}`);
     }
 
     if (expiryTests) {
-      const expiryTestCount = expiryTests.validTests.length + expiryTests.invalidTests.length + expiryTests.errorTests.length;
+      const expiryTestCount =
+        expiryTests.validTests.length +
+        expiryTests.invalidTests.length +
+        expiryTests.errorTests.length;
       console.log(`└── validateExpiry Tests: ${expiryTestCount} test cases`);
       console.log(`    ├── Valid: ${expiryTests.validTests.length}`);
       console.log(`    ├── Invalid: ${expiryTests.invalidTests.length}`);
@@ -422,7 +429,7 @@ describe('Enhanced Test Suite Coverage', () => {
 
   test('should have valid test case structures', () => {
     // Verify card validation tests
-    cardTestSuites.forEach(suite => {
+    cardTestSuites.forEach((suite) => {
       expect(suite.suiteName).toBeTruthy();
       expect(Array.isArray(suite.testCases)).toBe(true);
     });

@@ -5,7 +5,7 @@
       "description": "Card 4000000000000001",
       "cardNumber": "4000000000000001",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -21,7 +21,7 @@
       "description": "Card 4000000000000003",
       "cardNumber": "4000000000000003",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -37,7 +37,7 @@
       "description": "Card 4000000000000004",
       "cardNumber": "4000000000000004",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -53,7 +53,7 @@
       "description": "Card 4000000000000005",
       "cardNumber": "4000000000000005",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -69,7 +69,7 @@
       "description": "Card 4111111111111112",
       "cardNumber": "4111111111111112",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -85,7 +85,7 @@
       "description": "Card 4111111111111113",
       "cardNumber": "4111111111111113",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -101,7 +101,7 @@
       "description": "Card 4111111111111114",
       "cardNumber": "4111111111111114",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -117,7 +117,7 @@
       "description": "Card 4111111111111115",
       "cardNumber": "4111111111111115",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -133,7 +133,7 @@
       "description": "Card 4111111111111116",
       "cardNumber": "4111111111111116",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -149,7 +149,7 @@
       "description": "Card 4111111111111117",
       "cardNumber": "4111111111111117",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -165,7 +165,7 @@
       "description": "Card 4111111111111118",
       "cardNumber": "4111111111111118",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -181,7 +181,7 @@
       "description": "Card 4111111111111119",
       "cardNumber": "4111111111111119",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -197,7 +197,7 @@
       "description": "Card 5100000000000007",
       "cardNumber": "5100000000000007",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -213,7 +213,7 @@
       "description": "Card 5100000000000009",
       "cardNumber": "5100000000000009",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -229,7 +229,7 @@
       "description": "Card 5555555555554443",
       "cardNumber": "5555555555554443",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -245,7 +245,7 @@
       "description": "Card 5555555555554445",
       "cardNumber": "5555555555554445",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -261,7 +261,7 @@
       "description": "Card 5555555555554446",
       "cardNumber": "5555555555554446",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -277,7 +277,7 @@
       "description": "Card 340000000000008",
       "cardNumber": "340000000000008",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -293,7 +293,7 @@
       "description": "Card 378282246310004",
       "cardNumber": "378282246310004",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -309,7 +309,7 @@
       "description": "Card 378282246310006",
       "cardNumber": "378282246310006",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -325,7 +325,7 @@
       "description": "Card 378282246310007",
       "cardNumber": "378282246310007",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -341,7 +341,7 @@
       "description": "Card 6011000990139423",
       "cardNumber": "6011000990139423",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -357,7 +357,7 @@
       "description": "Card 6011000990139425",
       "cardNumber": "6011000990139425",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -373,7 +373,7 @@
       "description": "Card 6011111111111116",
       "cardNumber": "6011111111111116",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -389,7 +389,7 @@
       "description": "Card 6011111111111118",
       "cardNumber": "6011111111111118",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -405,7 +405,7 @@
       "description": "Card 3530111333300001",
       "cardNumber": "3530111333300001",
       "expected": {
-        "card_type": "jcb",
+        "card_brand": "jcb",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -421,7 +421,7 @@
       "description": "Card 3566002020360504",
       "cardNumber": "3566002020360504",
       "expected": {
-        "card_type": "jcb",
+        "card_brand": "jcb",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -437,7 +437,7 @@
       "description": "Card 3566002020360506",
       "cardNumber": "3566002020360506",
       "expected": {
-        "card_type": "jcb",
+        "card_brand": "jcb",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -453,7 +453,7 @@
       "description": "Card 30000000000003",
       "cardNumber": "30000000000003",
       "expected": {
-        "card_type": "diners_club_carte_blanche",
+        "card_brand": "diners_club_carte_blanche",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -469,7 +469,7 @@
       "description": "Card 30000000000005",
       "cardNumber": "30000000000005",
       "expected": {
-        "card_type": "diners_club_carte_blanche",
+        "card_brand": "diners_club_carte_blanche",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -485,7 +485,7 @@
       "description": "Card 38520000023236",
       "cardNumber": "38520000023236",
       "expected": {
-        "card_type": "diners_club_international",
+        "card_brand": "diners_club_international",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -501,7 +501,7 @@
       "description": "Card 38520000023238",
       "cardNumber": "38520000023238",
       "expected": {
-        "card_type": "diners_club_international",
+        "card_brand": "diners_club_international",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -517,7 +517,7 @@
       "description": "Card 411111111111111",
       "cardNumber": "411111111111111",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -533,7 +533,7 @@
       "description": "Card 41111111111111111",
       "cardNumber": "41111111111111111",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -549,7 +549,7 @@
       "description": "Card 555555555555444",
       "cardNumber": "555555555555444",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -565,7 +565,7 @@
       "description": "Card 55555555555544444",
       "cardNumber": "55555555555544444",
       "expected": {
-        "card_type": "mastercard",
+        "card_brand": "mastercard",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -581,7 +581,7 @@
       "description": "Card 37828224631000",
       "cardNumber": "37828224631000",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -597,7 +597,7 @@
       "description": "Card 3782822463100005",
       "cardNumber": "3782822463100005",
       "expected": {
-        "card_type": "amex",
+        "card_brand": "amex",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -613,7 +613,7 @@
       "description": "Card 601111111111111",
       "cardNumber": "601111111111111",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -629,7 +629,7 @@
       "description": "Card 60111111111111117",
       "cardNumber": "60111111111111117",
       "expected": {
-        "card_type": "discover",
+        "card_brand": "discover",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -645,7 +645,7 @@
       "description": "Card 3056930902590",
       "cardNumber": "3056930902590",
       "expected": {
-        "card_type": "diners_club_carte_blanche",
+        "card_brand": "diners_club_carte_blanche",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -661,7 +661,7 @@
       "description": "Card 305693090259044",
       "cardNumber": "305693090259044",
       "expected": {
-        "card_type": "diners_club_carte_blanche",
+        "card_brand": "diners_club_carte_blanche",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -677,7 +677,7 @@
       "description": "Card 353011133330000",
       "cardNumber": "353011133330000",
       "expected": {
-        "card_type": "jcb",
+        "card_brand": "jcb",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -693,7 +693,7 @@
       "description": "Card 35301113333000000",
       "cardNumber": "35301113333000000",
       "expected": {
-        "card_type": "jcb",
+        "card_brand": "jcb",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -709,7 +709,7 @@
       "description": "Card 1111111111111111",
       "cardNumber": "1111111111111111",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -721,7 +721,7 @@
       "description": "Card 2111111111111111",
       "cardNumber": "2111111111111111",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -733,7 +733,7 @@
       "description": "Card 7111111111111111",
       "cardNumber": "7111111111111111",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -745,7 +745,7 @@
       "description": "Card 8111111111111111",
       "cardNumber": "8111111111111111",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -757,7 +757,7 @@
       "description": "Card 1234567890123456",
       "cardNumber": "1234567890123456",
       "expected": {
-        "card_type": "unionpay",
+        "card_brand": "unionpay",
         "valid": false,
         "luhn_valid": false,
         "length_valid": true,
@@ -776,7 +776,7 @@
       "description": "Card 9999999999999999",
       "cardNumber": "9999999999999999",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -788,7 +788,7 @@
       "description": "Card 0000000000000000",
       "cardNumber": "0000000000000000",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": true,
         "length_valid": false,
@@ -800,7 +800,7 @@
       "description": "Card 123",
       "cardNumber": "123",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -812,7 +812,7 @@
       "description": "Card 12345",
       "cardNumber": "12345",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -824,7 +824,7 @@
       "description": "Card 1234567",
       "cardNumber": "1234567",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -836,7 +836,7 @@
       "description": "Card 12345678901",
       "cardNumber": "12345678901",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -853,7 +853,7 @@
       "description": "Card    ",
       "cardNumber": "   ",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": true,
         "length_valid": false,
@@ -865,7 +865,7 @@
       "description": "Card abcd1234efgh5678",
       "cardNumber": "abcd1234efgh5678",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -877,7 +877,7 @@
       "description": "Card 4111111111111111extra",
       "cardNumber": "4111111111111111extra",
       "expected": {
-        "card_type": "visa",
+        "card_brand": "visa",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -893,7 +893,7 @@
       "description": "Card test",
       "cardNumber": "test",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -905,7 +905,7 @@
       "description": "Card null",
       "cardNumber": "null",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,
@@ -917,7 +917,7 @@
       "description": "Card undefined",
       "cardNumber": "undefined",
       "expected": {
-        "card_type": "unknown",
+        "card_brand": "unknown",
         "valid": false,
         "luhn_valid": false,
         "length_valid": false,

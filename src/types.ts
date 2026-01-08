@@ -1,5 +1,5 @@
 type CardTypeBase = {
-  name: string;
+  brand: string;
   valid_length: number[];
   cvv_length: number[];
   gaps?: number[]; // Optional property (only Sodexo has it)
@@ -12,7 +12,7 @@ export type CardType = CardTypeBase &
   );
 
 export type CardDetails = {
-  card_type: string; // e.g., 'visa', 'mastercard', 'amex', 'unknown'
+  card_brand: string; // e.g., 'visa', 'mastercard', 'amex', 'unknown'
   valid: boolean; // Overall validity (luhn_valid && length_valid)
   luhn_valid: boolean; // Whether card passes Luhn algorithm check
   length_valid: boolean; // Whether card length is valid for detected type

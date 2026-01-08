@@ -4,7 +4,7 @@ import { cardTypes } from './constants';
 export class CardValidator {
   private cardNumber: string;
   private card: CardType | null = null;
-  private cardType: string = 'unknown';
+  private cardBrand: string = 'unknown';
   private luhnValid: boolean = false;
   private lengthValid: boolean = false;
   private cvvLength: number[] = [];
@@ -12,22 +12,25 @@ export class CardValidator {
   private year: number | null = null;
   private supportedLengths: number[] = [];
 
-  constructor(cardNumber: string) {
+  constructor(cardNumber: string, cardBrand?: string) {
     this.cardNumber = cardNumber;
+    if (typeof cardBrand === 'string') {
+      this.cardBrand = cardBrand;
+    }
   }
 
-  private getCardType(number: string): CardType | null {
-    for (let j = 0; j < cardTypes.length; j++) {
-      const cardType = cardTypes[j];
-      if (cardType?.pattern && number.match(cardType?.pattern)) {
-        return cardType;
-      } else if (cardType?.range) {
-        const bin = parseInt(number.substring(0, 6));
-        if (isNaN(bin)) return null;
-        for (let k = 0; k < cardType.range.length; k++) {
-          const range = cardType.range[k];
+  private getCardType(cardNumber: string): CardType | null {
+    for (const card of cardTypes) {
+      if (card.pattern && cardNumber.match(card.pattern)) {
+        return card;
+      } else if (card.range) {
+        const bin = parseInt(cardNumber.substring(0, 6));
+        if (isNaN(bin)) {
+          return null;
+        }
+        for (const range of card.range) {
           if (range && range[0] && range[1] && range[0] <= bin && bin <= range[1]) {
-            return cardType;
+            return card;
           }
         }
       }
@@ -35,9 +38,13 @@ export class CardValidator {
     return null;
   }
 
-  private isValidLuhn(number: string): boolean {
+  private getCardTypeByCardBrand(cardBrand: string): CardType | null {
+    return cardTypes?.find((card) => card.brand === cardBrand) ?? null;
+  }
+
+  private isValidLuhn(cardNumber: string): boolean {
     let sum: number = 0;
-    const digits: string[] = number.split('').reverse();
+    const digits: string[] = cardNumber.split('').reverse();
 
     for (let n = 0; n < digits.length; n++) {
       let cur = digits[n];
@@ -60,22 +67,25 @@ export class CardValidator {
     return sum % 10 === 0;
   }
 
-  private isValidLength(number: string): boolean {
-    const length = number.length;
+  private isValidLength(cardNumber: string): boolean {
+    const length = cardNumber.length;
     return this.card?.valid_length.includes(length) ?? false;
   }
 
-  private validateCardNumber(number: string): CardDetails {
-    this.card = this.getCardType(number);
-    this.luhnValid = this.isValidLuhn(number);
-    if (this.card && this.cardType) {
-      this.cardType = this.card.name;
-      this.lengthValid = this.isValidLength(number);
+  private validateCardNumber(cardNumber: string, cardBrand?: string): CardDetails {
+    this.card =
+      typeof cardBrand === 'string'
+        ? this.getCardTypeByCardBrand(cardBrand)
+        : this.getCardType(cardNumber);
+    this.luhnValid = this.isValidLuhn(cardNumber);
+    if (this.card && this.cardBrand) {
+      this.cardBrand = this.card.brand;
+      this.lengthValid = this.isValidLength(cardNumber);
       this.cvvLength = this.card.cvv_length;
       this.supportedLengths = this.card.valid_length;
     }
     return {
-      card_type: this.cardType,
+      card_brand: this.cardBrand,
       valid: this.luhnValid && this.lengthValid,
       luhn_valid: this.luhnValid,
       length_valid: this.lengthValid,
@@ -84,14 +94,24 @@ export class CardValidator {
     };
   }
 
-  private normalize(number: string): string {
-    return number.toString().replace(/[ -]/g, '');
+  private normalize(cardNumber: string): string {
+    return cardNumber.toString().replace(/[ -]/g, '');
   }
 
   public getCardDetails(): CardDetails {
-    if (!this.cardNumber) throw 'Invalid cardNumber property set';
-    var number = this.normalize(this.cardNumber);
+    if (!this.cardNumber) {
+      throw new Error('Invalid cardNumber property set');
+    }
+    const number = this.normalize(this.cardNumber);
     return this.validateCardNumber(number);
+  }
+
+  public getCardDetailsByCardBrand(): CardDetails {
+    if (!this.cardNumber) {
+      throw new Error('Invalid cardNumber property set');
+    }
+    const number = this.normalize(this.cardNumber);
+    return this.validateCardNumber(number, this.cardBrand);
   }
 
   public setBaseDate(month?: string | number | null, year?: string | number | null): void {
@@ -101,7 +121,7 @@ export class CardValidator {
       parseInt(String(month)) < 1 ||
       parseInt(String(month)) > 12
     ) {
-      throw 'Invalid date format. Use MM, YYYY format';
+      throw new Error('Invalid date format. Use MM, YYYY format');
     }
 
     if (!month || !year) {
@@ -115,7 +135,9 @@ export class CardValidator {
   }
 
   public validateCard(): boolean {
-    if (!this.cardNumber) throw 'Invalid cardNumber property set';
+    if (!this.cardNumber) {
+      throw new Error('Invalid cardNumber property set');
+    }
     return this.getCardDetails().valid;
   }
 
@@ -130,7 +152,7 @@ export class CardValidator {
     if (isNaN(Number(val))) {
       throw 'CVV should be a number';
     }
-    if (this.cardType && this.cardType === 'maestro') {
+    if (this.cardBrand && this.cardBrand === 'maestro') {
       return val === '' || (val && this.cvvLength.includes(val.length)) || false;
     }
     if (!val) {
@@ -142,7 +164,7 @@ export class CardValidator {
   public validateExpiry(val: string) {
     const expiryRegex = /^(0[1-9]|1[0-2])\/2[0-9]{3}$/;
     if (!this.cardNumber) {
-      throw 'Invalid cardNumber property set';
+      throw new Error('Invalid cardNumber property set');
     }
     if (!val) {
       throw new Error('Expiry should not be empty');

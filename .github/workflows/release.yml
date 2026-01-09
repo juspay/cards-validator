@@ -3,17 +3,9 @@ name: Release and Publish
 on:
   push:
     branches: [release]
-  pull_request:
-    branches: [release]
-    types: [closed]
 
 jobs:
   release:
-    # Only run on direct pushes to release branch or when PR is merged
-    if: |
-      (github.event_name == 'push') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-
     runs-on: ubuntu-latest
     environment: publish
 
@@ -23,16 +15,16 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -43,7 +35,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version:
+          version: latest
 
       - name: Install dependencies
         run: pnpm install
@@ -84,6 +76,7 @@ jobs:
           # Get current version
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           echo "Current version: $CURRENT_VERSION"
+          echo "previous_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
           # Bump version based on type
           if [ "${{ steps.version-type.outputs.version_type }}" = "major" ]; then

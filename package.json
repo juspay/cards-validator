@@ -1,6 +1,6 @@
 {
   "name": "@juspay/cards-validator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A JS/TS lib for validating credit and debit card numbers, determining card types, and providing card-specific information like CVV length",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
